@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Data Mempelai | Tewe Tech</title>
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tewetech/favicon/refs/heads/main/tewe.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Quicksand:wght@500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+sans: ['Quicksand', 'sans-serif'],
+heading: ['Outfit', 'sans-serif'],
+mono: ['JetBrains Mono', 'monospace'],
+},
+colors: {
+neu: {
+primary: '#079790',
+text: '#1e293b',
+light: '#64748b'
+}
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #f8fafc;
+color: #1e293b;
+font-family: 'Quicksand', sans-serif;
+overflow: hidden;
+}
+::-webkit-scrollbar {
+width: 5px;
+height: 5px;
+}
+::-webkit-scrollbar-track {
+background: transparent;
+}
+::-webkit-scrollbar-thumb {
+background: #cbd5e1;
+border-radius: 10px;
+}
+* {
+scrollbar-width: thin;
+scrollbar-color: #cbd5e1 transparent;
+}
+.custom-scrollbar::-webkit-scrollbar {
+width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+background: #cbd5e1;
+border-radius: 4px;
+}
+.active-tab {
+color: #079790 !important;
+background-color: rgba(7, 151, 144, 0.1) !important;
+}
+input[type="file"] {
+padding: 0.5rem !important;
+font-size: 11px;
+background-color: transparent !important;
+border: none !important;
+box-shadow: none !important;
+}
+@media (min-width: 768px) {
+input[type="file"] {
+font-size: 13px;
+}
+}
+input[type="file"]::file-selector-button {
+background: #f1f5f9;
+border: 1px solid #e2e8f0;
+padding: 0.5rem 1rem;
+border-radius: 999px;
+color: #079790;
+font-weight: bold;
+cursor: pointer;
+margin-right: 1rem;
+transition: all 0.2s ease;
+font-size: inherit;
+}
+input[type="file"]::file-selector-button:hover {
+background: #e2e8f0;
+}
+.scroll-fade {
+mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+.btn-processing {
+position: relative;
+overflow: hidden;
+pointer-events: none;
+opacity: 0.85;
+}
+.btn-processing::after {
+content: '';
+position: absolute;
+top: 0; left: -100%; width: 50%; height: 100%;
+background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+animation: shimmer-btn 1s infinite linear;
+z-index: 10;
+}
+@keyframes shimmer-btn {
+100% { left: 200%; }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type=number] {
+-moz-appearance: textfield;
+}
+.tl-dot {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: bold;
+font-size: 12px;
+transition: all 0.3s ease;
+position: relative;
+z-index: 10;
+border: 2px solid transparent;
+}
+.tl-dot.active {
+background-color: #079790;
+color: white;
+box-shadow: 0 4px 6px -1px rgba(7, 151, 144, 0.3);
+}
+.tl-dot.inactive {
+background-color: #ffffff;
+color: #94a3b8;
+border-color: #e2e8f0;
+}
+.tl-line {
+position: absolute;
+top: 50%;
+left: 0;
+height: 4px;
+background-color: #079790;
+transform: translateY(-50%);
+z-index: 5;
+transition: all 0.3s ease;
+}
+.tl-bg {
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+height: 4px;
+background-color: #e2e8f0;
+transform: translateY(-50%);
+z-index: 4;
+border-radius: 10px;
+}
+.glass-panel {
+background: rgba(255, 255, 255, 0.85);
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.float-container { position: relative; width: 100%; }
+.float-input {
+width: 100%;
+padding: 22px 16px 6px 16px !important;
+background-color: #ffffff !important;
+border: 1px solid #e2e8f0 !important;
+border-radius: 1rem !important;
+font-family: 'Quicksand', sans-serif !important;
+font-size: 13px !important;
+font-weight: 600 !important;
+color: #1e293b !important;
+transition: all 0.2s ease;
+appearance: none;
+box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+.float-input:focus {
+border-color: #079790 !important;
+box-shadow: 0 0 0 3px rgba(7, 151, 144, 0.15) !important;
+outline: none;
+}
+.float-input:disabled {
+background-color: #f1f5f9 !important;
+color: #94a3b8 !important;
+cursor: not-allowed;
+border-color: #e2e8f0 !important;
+}
+.float-label {
+position: absolute;
+left: 16px;
+top: 50%;
+transform: translateY(-50%);
+font-size: 12px;
+font-weight: 700;
+color: #64748b;
+pointer-events: none;
+transition: all 0.2s ease;
+}
+.float-input:focus ~ .float-label,
+.float-input:not(:placeholder-shown) ~ .float-label,
+.float-input[type="date"] ~ .float-label,
+.float-input[type="time"] ~ .float-label,
+select.float-input ~ .float-label {
+top: 8px;
+transform: translateY(0);
+font-size: 9px;
+color: #079790;
+}
+textarea.float-input {
+resize: none;
+padding-top: 24px !important;
+}
+textarea.float-input ~ .float-label {
+top: 14px;
+transform: none;
+}
+textarea.float-input:focus ~ .float-label,
+textarea.float-input:not(:placeholder-shown) ~ .float-label {
+top: 8px;
+font-size: 9px;
+}
+</style>
+</head>
+<body class="flex flex-col md:flex-row h-[100dvh] w-screen overflow-hidden">
+
+<div id="authScreen" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-md transition-opacity p-4">
+<div class="bg-white p-8 md:p-10 rounded-[30px] w-full max-w-[340px] md:max-w-[400px] shadow-2xl border border-gray-100 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-2 bg-[#079790]"></div>
+<div class="text-center mb-8 mt-2">
+<h2 class="text-[20px] md:text-[24px] font-heading font-black tracking-tight text-[#1e293b]">FORMULIR<span class="text-[#079790]"> MEMPELAI</span></h2>
+<p class="text-[#64748b] text-[12px] font-bold mt-1">Formulir untuk Mempelai</p>
+</div>
+<div class="flex bg-gray-100 rounded-full p-1 mb-6">
+<button type="button" onclick="switchAuth('login')" id="btnAuthLogin" class="flex-1 py-2.5 text-[12px] font-bold rounded-full bg-white text-[#079790] shadow-sm transition-all">Masuk</button>
+<button type="button" onclick="switchAuth('register')" id="btnAuthRegister" class="flex-1 py-2.5 text-[12px] font-bold rounded-full text-[#64748b] transition-all">Daftar</button>
+</div>
+<form id="authForm" onsubmit="event.preventDefault(); prosesAuth();" class="flex flex-col gap-5">
+<input type="hidden" id="authMode" value="login">
+<div class="float-container">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none md:hidden z-10">
+<i class="fas fa-phone-alt text-[#079790]"></i>
+</div>
+<input type="text" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="authPhone" required class="float-input !pl-11 md:!pl-4" placeholder=" ">
+<label class="float-label !left-11 md:!left-4">Nomor HP (WhatsApp)</label>
+</div>
+<button type="submit" id="btnSubmitAuth" class="w-full mt-2 py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[13px] uppercase tracking-wider transition-all">Masuk</button>
+</form>
+</div>
+</div>
+
+<header class="w-full h-[65px] shrink-0 flex flex-col md:hidden items-center justify-center z-40 relative glass-panel shadow-sm border-b border-gray-200">
+<h1 class="text-[12px] font-heading font-black tracking-tight text-[#1e293b] mb-1.5">FORMULIR <span class="text-[#079790]">MEMPELAI</span></h1>
+<div class="flex gap-2">
+<p class="bg-gray-100 text-[#079790] text-[8px] font-bold px-3 py-1 rounded-full border border-gray-200">Formulir Untuk Mempelai</p>
+</div>
+</header>
+
+<aside class="hidden md:flex w-52 lg:w-64 h-full shrink-0 flex-col z-40 relative bg-white shadow-[2px_0_10px_rgba(0,0,0,0.03)] border-r border-gray-100">
+<div class="flex flex-col items-center justify-center mt-10 mb-8">
+<h1 class="text-[14px] md:text-[20px] font-heading font-black tracking-tight text-[#1e293b]">FORMULIR<span class="text-[#079790]"> MEMPELAI</span></h1>
+<p class="bg-gray-100 text-[#079790] text-[9px] md:text-[10px] font-bold px-4 py-1.5 mt-3 rounded-full border border-gray-200">Formulir Untuk Mempelai</p>
+</div>
+<nav class="flex flex-col gap-3 px-5 w-full mt-2 flex-1 overflow-y-auto">
+<button type="button" onclick="switchTab('mempelai')" class="tab-btn btn-tab-mempelai flex items-center py-3.5 px-5 rounded-2xl text-[11px] md:text-[14px] font-bold tracking-wide active-tab transition-all gap-4 w-full text-[#64748b]">
+<i class="fas fa-user-friends w-5 text-center md:text-[16px]"></i> <span>Mempelai</span>
+</button>
+<button type="button" onclick="switchTab('media')" class="tab-btn btn-tab-media flex items-center py-3.5 px-5 rounded-2xl text-[11px] md:text-[14px] font-bold tracking-wide text-[#64748b] hover:bg-gray-50 transition-all gap-4 w-full">
+<i class="fas fa-folder-open w-5 text-center md:text-[16px]"></i> <span>Media</span>
+</button>
+<button type="button" onclick="switchTab('acara')" class="tab-btn btn-tab-acara flex items-center py-3.5 px-5 rounded-2xl text-[11px] md:text-[14px] font-bold tracking-wide text-[#64748b] hover:bg-gray-50 transition-all gap-4 w-full">
+<i class="fas fa-ring w-5 text-center md:text-[16px]"></i> <span>Acara</span>
+</button>
+<button type="button" onclick="switchTab('kado')" class="tab-btn btn-tab-kado flex items-center py-3.5 px-5 rounded-2xl text-[11px] md:text-[14px] font-bold tracking-wide text-[#64748b] hover:bg-gray-50 transition-all gap-4 w-full">
+<i class="fas fa-gift w-5 text-center md:text-[16px]"></i> <span>Kado</span>
+</button>
+<div class="w-full h-[1px] bg-gray-200 my-2"></div>
+<button type="button" onclick="tampilkanKonfirmasi()" id="btnSubmitDesktop" class="flex items-center py-4 px-5 rounded-2xl text-[12px] md:text-[14px] font-extrabold tracking-wide text-white bg-[#079790] hover:bg-[#06827c] shadow-md shadow-[#079790]/20 transition-all gap-4 w-full">
+<i class="fas fa-save w-5 text-center md:text-[18px]"></i> <span>SIMPAN</span>
+</button>
+<button type="button" onclick="logout()" id="btnLogoutDesktop" class="flex items-center py-4 px-5 mt-1 rounded-2xl text-[12px] md:text-[14px] font-extrabold tracking-wide text-[#ef4444] bg-red-50 hover:bg-red-100 border border-red-100 transition-all w-full justify-center">
+<span>KELUAR</span>
+</button>
+</nav>
+</aside>
+
+<main class="flex-1 w-full relative z-10 overflow-hidden flex flex-col bg-[#f8fafc]">
+
+<div id="progress-wrapper" class="w-full hidden px-4 md:px-8 pt-4 md:pt-6 max-w-5xl mx-auto z-20 shrink-0">
+<div id="progress-container" class="w-full relative px-8 py-6 bg-white shadow-sm border border-gray-100 rounded-[30px]">
+<div class="relative w-full flex justify-between items-center">
+<div class="tl-bg"></div>
+<div id="tl-progress-bar" class="tl-line" style="width: 0%;"></div>
+<div id="dot-mempelai" class="tl-dot active"><i class="fas fa-user-friends"></i></div>
+<div id="dot-media" class="tl-dot inactive"><i class="fas fa-folder-open"></i></div>
+<div id="dot-acara" class="tl-dot inactive"><i class="fas fa-ring"></i></div>
+<div id="dot-kado" class="tl-dot inactive"><i class="fas fa-gift"></i></div>
+</div>
+</div>
+</div>
+
+<form id="mainForm" class="w-full h-full flex-col hidden overflow-y-auto md:overflow-hidden pb-8 md:pb-8 p-4 md:p-8 pt-4 max-w-5xl mx-auto relative z-10">
+
+<div id="section-mempelai" class="tab-content flex-col w-full h-full">
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full mb-6 shrink-0">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-4 text-center">PILIH KODE UNDANGAN</h2>
+<div class="grid grid-cols-5 md:grid-cols-10 gap-2 w-full mx-auto">
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U1" checked onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U1</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U2" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U2</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U3" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U3</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U4" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U4</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U5" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U5</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U6" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U6</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U7" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U7</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U8" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U8</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U9" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U9</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U10" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U10</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U11" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U11</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U12" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U12</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U13" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U13</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U14" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U14</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U15" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U15</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U16" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U16</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U17" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U17</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U18" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U18</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U19" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U19</div>
+</label>
+<label class="cursor-pointer">
+<input type="radio" name="kodeUndangan" value="U20" onchange="loadDataByKode(this.value)" class="peer sr-only">
+<div class="py-2 text-center text-[12px] font-bold rounded-xl border border-gray-200 text-[#64748b] peer-checked:bg-[#079790] peer-checked:text-white peer-checked:border-[#079790] transition-all">U20</div>
+</label>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:flex-1 md:min-h-0 shrink-0 md:shrink">
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full md:h-full md:overflow-y-auto custom-scrollbar">
+<h2 class="flex items-center justify-center text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">
+<i class="fas fa-person-dress text-pink-500 mr-2 text-[18px] md:text-[22px]"></i> DATA WANITA
+</h2>
+<div class="space-y-5">
+<div class="float-container">
+<input type="text" id="namaLengkapWanita" class="float-input" placeholder=" ">
+<label class="float-label">Nama Lengkap</label>
+</div>
+<div class="float-container">
+<input type="text" id="namaPanggilanWanita" class="float-input" placeholder=" ">
+<label class="float-label">Nama Panggilan</label>
+</div>
+<div class="float-container">
+<input type="text" id="ayahWanita" class="float-input" placeholder=" ">
+<label class="float-label">Nama Ayah</label>
+</div>
+<div class="float-container">
+<input type="text" id="ibuWanita" class="float-input" placeholder=" ">
+<label class="float-label">Nama Ibu</label>
+</div>
+<div class="float-container">
+<input type="text" id="putriKe" class="float-input" placeholder=" ">
+<label class="float-label">Putri Ke (Contoh: 1 / Pertama)</label>
+</div>
+</div>
+</div>
+
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full md:h-full md:overflow-y-auto custom-scrollbar">
+<h2 class="flex items-center justify-center text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">
+<i class="fas fa-person text-blue-500 mr-2 text-[18px] md:text-[22px]"></i> DATA PRIA
+</h2>
+<div class="space-y-5">
+<div class="float-container">
+<input type="text" id="namaLengkapPria" class="float-input" placeholder=" ">
+<label class="float-label">Nama Lengkap</label>
+</div>
+<div class="float-container">
+<input type="text" id="namaPanggilanPria" class="float-input" placeholder=" ">
+<label class="float-label">Nama Panggilan</label>
+</div>
+<div class="float-container">
+<input type="text" id="ayahPria" class="float-input" placeholder=" ">
+<label class="float-label">Nama Ayah</label>
+</div>
+<div class="float-container">
+<input type="text" id="ibuPria" class="float-input" placeholder=" ">
+<label class="float-label">Nama Ibu</label>
+</div>
+<div class="float-container">
+<input type="text" id="putraKe" class="float-input" placeholder=" ">
+<label class="float-label">Putra Ke (Contoh: 2 / Kedua)</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="section-media" class="tab-content hidden flex-col w-full h-full">
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full md:h-full md:overflow-y-auto custom-scrollbar">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-4 text-center">MEDIA FOTO</h2>
+<p class="text-[10px] md:text-[12px] text-red-500 font-bold text-center mb-6">Kosongkan jika tidak ingin merubah foto saat proses edit.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+<div class="relative bg-white border border-[#e2e8f0] rounded-xl p-4 pt-8 shadow-sm transition-all hover:border-[#079790]">
+<label class="absolute left-4 top-3 text-[10px] md:text-[11px] font-bold text-[#079790]"><i class="fas fa-female text-pink-500 mr-2"></i>Foto Pengantin Wanita</label>
+<input type="file" id="linkFotoWanita" accept="image/*" class="w-full mt-1">
+<div id="previewFotoWanita" class="mt-4 hidden p-2 bg-gray-50 border border-gray-200 rounded-2xl w-fit">
+<img id="imgWanita" class="w-32 md:w-40 h-auto object-cover rounded-xl" />
+</div>
+</div>
+<div class="relative bg-white border border-[#e2e8f0] rounded-xl p-4 pt-8 shadow-sm transition-all hover:border-[#079790]">
+<label class="absolute left-4 top-3 text-[10px] md:text-[11px] font-bold text-[#079790]"><i class="fas fa-male text-blue-500 mr-2"></i>Foto Pengantin Pria</label>
+<input type="file" id="linkFotoPria" accept="image/*" class="w-full mt-1">
+<div id="previewFotoPria" class="mt-4 hidden p-2 bg-gray-50 border border-gray-200 rounded-2xl w-fit">
+<img id="imgPria" class="w-32 md:w-40 h-auto object-cover rounded-xl" />
+</div>
+</div>
+<div class="relative bg-white border border-[#e2e8f0] rounded-xl p-4 pt-8 shadow-sm transition-all hover:border-[#079790]">
+<label class="absolute left-4 top-3 text-[10px] md:text-[11px] font-bold text-[#079790]"><i class="fas fa-images text-[#079790] mr-2"></i>Foto Album (Bisa Banyak)</label>
+<input type="file" id="linkFolderAlbum" accept="image/*" multiple class="w-full mt-1">
+<div id="previewFotoAlbum" class="mt-4 hidden flex-wrap gap-3 p-3 bg-gray-50 border border-gray-200 rounded-2xl w-full"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="section-acara" class="tab-content hidden flex-col w-full h-full">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 md:flex-1 md:min-h-0 shrink-0 md:shrink">
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full md:h-full md:overflow-y-auto custom-scrollbar">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">DATA AKAD</h2>
+<div class="space-y-5">
+<div class="float-container">
+<input type="date" id="tanggalAkad" class="float-input" placeholder=" ">
+<label class="float-label">Tanggal</label>
+</div>
+<div class="float-container">
+<input type="time" id="jamAkad" class="float-input" placeholder=" ">
+<label class="float-label">Jam</label>
+</div>
+<div class="float-container">
+<textarea id="alamatAkad" rows="3" class="float-input" placeholder=" "></textarea>
+<label class="float-label">Alamat Lengkap</label>
+</div>
+<div class="float-container">
+<input type="url" id="mapAkad" class="float-input" placeholder=" ">
+<label class="float-label">Link Google Map</label>
+</div>
+</div>
+</div>
+
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full md:h-full md:overflow-y-auto custom-scrollbar">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">DATA RESEPSI</h2>
+<div class="space-y-5">
+<div class="float-container">
+<input type="date" id="tanggalResepsi" class="float-input" placeholder=" ">
+<label class="float-label">Tanggal</label>
+</div>
+<div class="float-container">
+<input type="time" id="jamResepsi" class="float-input" placeholder=" ">
+<label class="float-label">Jam</label>
+</div>
+<div class="float-container">
+<textarea id="alamatResepsi" rows="3" class="float-input" placeholder=" "></textarea>
+<label class="float-label">Alamat Lengkap</label>
+</div>
+<div class="float-container">
+<input type="url" id="mapResepsi" class="float-input" placeholder=" ">
+<label class="float-label">Link Google Map</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="section-kado" class="tab-content hidden flex-col w-full h-full">
+<div class="flex-1 min-h-0 flex flex-col space-y-6 md:space-y-8 md:overflow-y-auto custom-scrollbar shrink-0 md:shrink md:pr-1">
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full shrink-0">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">KADO DIGITAL</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-5 items-end mb-8">
+<div class="md:col-span-1 float-container">
+<select id="bankSelect" class="float-input">
+<option value="Bank Rakyat Indonesia (BRI)">Bank Rakyat Indonesia (BRI)</option>
+<option value="Bank Negara Indonesia (BNI)">Bank Negara Indonesia (BNI)</option>
+<option value="Bank Tabungan Negara (BTN)">Bank Tabungan Negara (BTN)</option>
+<option value="Bank Central Asia (BCA)">Bank Central Asia (BCA)</option>
+<option value="Bank CIMB Niaga">Bank CIMB Niaga</option>
+<option value="DANA">DANA</option>
+<option value="OVO">OVO</option>
+<option value="GoPay">GoPay</option>
+<option value="ShopeePay">ShopeePay</option>
+</select>
+<label class="float-label">Bank / E-Wallet</label>
+</div>
+<div class="md:col-span-1 float-container">
+<input type="text" id="nomorRekening" class="float-input" placeholder=" ">
+<label class="float-label">No. Rekening</label>
+</div>
+<div class="md:col-span-1 float-container">
+<input type="text" id="atasNama" class="float-input" placeholder=" ">
+<label class="float-label">Atas Nama</label>
+</div>
+<div class="md:col-span-1">
+<button type="button" onclick="tambahKado()" class="w-full py-4 md:py-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-[#079790] rounded-xl text-[11px] md:text-[13px] font-extrabold uppercase tracking-widest transition-colors h-[54px] md:h-[60px]">
+Tambah Kado
+</button>
+</div>
+</div>
+<div id="tabelKado" class="flex flex-col gap-4">
+</div>
+</div>
+
+<div class="bg-white shadow-sm border border-gray-100 rounded-[30px] p-6 md:p-8 w-full shrink-0">
+<h2 class="text-[14px] md:text-[18px] font-heading font-bold text-[#1e293b] mb-6 md:mb-8 text-center">KONTAK KONFIRMASI</h2>
+<div class="float-container">
+<input type="text" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="noHpWa" class="float-input" placeholder=" ">
+<label class="float-label">Nomor HP WhatsApp</label>
+</div>
+</div>
+
+</div>
+</div>
+</form>
+
+<div id="mobileActionNav" class="md:hidden w-full px-4 pb-4 bg-[#f8fafc] z-20 shrink-0">
+<button type="button" id="btnNextMobile" onclick="nextTabMobile()" class="w-full py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[13px] uppercase tracking-wider transition-all">Selanjutnya</button>
+<button type="button" id="btnSubmitMobile" onclick="tampilkanKonfirmasi()" class="hidden w-full py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[13px] uppercase tracking-wider transition-all justify-center items-center gap-2">
+<i class="fas fa-save text-[16px]"></i> Simpan Formulir
+</button>
+</div>
+
+</main>
+
+<nav class="w-full h-[75px] shrink-0 flex md:hidden justify-around items-center px-1 z-[100] relative glass-panel rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.03)] border-t border-gray-200">
+<button type="button" onclick="switchTab('mempelai')" class="tab-btn btn-tab-mempelai flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide active-tab transition-all gap-1 h-12 text-[#64748b]">
+<i class="fas fa-user-friends text-[14px] mb-0.5"></i> Mempelai
+</button>
+<button type="button" onclick="switchTab('media')" class="tab-btn btn-tab-media flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide text-[#64748b] transition-all gap-1 h-12 hover:bg-gray-50/50">
+<i class="fas fa-folder-open text-[14px] mb-0.5"></i> Media
+</button>
+<button type="button" onclick="switchTab('acara')" class="tab-btn btn-tab-acara flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide text-[#64748b] transition-all gap-1 h-12 hover:bg-gray-50/50">
+<i class="fas fa-ring text-[14px] mb-0.5"></i> Acara
+</button>
+<button type="button" onclick="switchTab('kado')" class="tab-btn btn-tab-kado flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide text-[#64748b] transition-all gap-1 h-12 hover:bg-gray-50/50">
+<i class="fas fa-gift text-[14px] mb-0.5"></i> Kado
+</button>
+<button type="button" onclick="logout()" class="tab-btn flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-extrabold tracking-wide text-red-500 transition-all gap-1 h-12 hover:bg-red-50">
+<i class="fas fa-sign-out-alt text-[14px] mb-0.5"></i> Keluar
+</button>
+</nav>
+
+<div id="modal-konfirmasi" class="fixed inset-0 z-[160] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
+<div class="bg-white p-6 md:p-8 rounded-[30px] w-full max-w-[280px] md:max-w-[340px] relative flex flex-col items-center text-center shadow-2xl border border-gray-100">
+<div class="w-14 h-14 md:w-16 md:h-16 bg-teal-50 rounded-full flex items-center justify-center mb-5 md:mb-6 border border-teal-100">
+<i class="fas fa-question-circle text-[#079790] text-[20px] md:text-[24px]"></i>
+</div>
+<h3 class="text-[#1e293b] font-heading font-bold text-[14px] md:text-[16px] mb-2">Konfirmasi Simpan</h3>
+<p class="text-[#64748b] text-[11px] md:text-[13px] font-medium mb-6 md:mb-8">Apakah Anda yakin data yang diinput sudah benar?</p>
+<div class="flex gap-4 w-full">
+<button type="button" onclick="batalSimpan()" class="flex-1 py-3 md:py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Batal</button>
+<button type="button" onclick="lanjutSimpan()" class="flex-1 py-3 md:py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Simpan</button>
+</div>
+</div>
+</div>
+
+<div id="modal-info" class="fixed inset-0 z-[250] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
+<div class="bg-white p-6 md:p-8 rounded-[30px] w-full max-w-[280px] md:max-w-[340px] relative flex flex-col items-center text-center shadow-2xl border border-gray-100">
+<div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 rounded-full flex items-center justify-center mb-5 md:mb-6 border border-blue-100">
+<i class="fas fa-info-circle text-blue-500 text-[20px] md:text-[24px]"></i>
+</div>
+<h3 class="text-[#1e293b] font-heading font-bold text-[14px] md:text-[16px] mb-2">Informasi</h3>
+<p id="modal-info-desc" class="text-[#64748b] text-[11px] md:text-[13px] font-medium mb-6 md:mb-8"></p>
+<button type="button" id="btnTutupModal" onclick="tutupModal()" class="w-full py-3 md:py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Mengerti</button>
+</div>
+</div>
+
+<script>
+const gasUrl = "https://script.google.com/macros/s/AKfycbypxb2aKq0dtyovZy-3kZ7sA21bWG9DkXzfwjmUK5xD4MICahtodgRmp_AOv3UO6BUW/exec";
+let dataKado = [];
+let editRowId = null;
+let currentUserPhone = localStorage.getItem('userPhone');
+
+const mobileTabsOrder = ['mempelai', 'media', 'acara', 'kado'];
+let currentTabIndex = 0;
+
+if (currentUserPhone) {
+document.getElementById('authScreen').classList.add('hidden');
+switchTab('mempelai');
+let savedKode = localStorage.getItem('savedKode_' + currentUserPhone);
+let initialKode = savedKode ? savedKode : document.querySelector('input[name="kodeUndangan"]:checked').value;
+if(savedKode) kunciKode(savedKode);
+loadDataByKode(initialKode);
+}
+
+function kunciKode(kode) {
+document.querySelectorAll('input[name="kodeUndangan"]').forEach(radio => {
+if(radio.value !== kode) {
+radio.disabled = true;
+radio.parentElement.classList.add('opacity-50', 'pointer-events-none');
+radio.nextElementSibling.classList.remove('text-[#64748b]', 'border-gray-200');
+radio.nextElementSibling.classList.add('bg-gray-100', 'text-gray-400', 'border-gray-100');
+} else {
+radio.checked = true;
+radio.nextElementSibling.classList.add('text-[#64748b]', 'border-gray-200');
+radio.nextElementSibling.classList.remove('bg-gray-100', 'text-gray-400', 'border-gray-100');
+}
+});
+}
+
+function switchAuth(mode) {
+document.getElementById('authMode').value = mode;
+const btnLogin = document.getElementById('btnAuthLogin');
+const btnRegister = document.getElementById('btnAuthRegister');
+const btnSubmit = document.getElementById('btnSubmitAuth');
+if (mode === 'login') {
+btnLogin.classList.add('bg-white', 'text-[#079790]', 'shadow-sm');
+btnLogin.classList.remove('text-[#64748b]');
+btnRegister.classList.remove('bg-white', 'text-[#079790]', 'shadow-sm');
+btnRegister.classList.add('text-[#64748b]');
+btnSubmit.innerText = 'Masuk';
+} else {
+btnRegister.classList.add('bg-white', 'text-[#079790]', 'shadow-sm');
+btnRegister.classList.remove('text-[#64748b]');
+btnLogin.classList.remove('bg-white', 'text-[#079790]', 'shadow-sm');
+btnLogin.classList.add('text-[#64748b]');
+btnSubmit.innerText = 'Daftar';
+}
+}
+
+async function prosesAuth() {
+const phone = document.getElementById('authPhone').value;
+const mode = document.getElementById('authMode').value;
+if (!phone || phone.trim() === '') {
+tampilkanModal('Nomor HP wajib diisi!', false);
+return;
+}
+document.getElementById('btnSubmitAuth').innerHTML = '<i class="fas fa-spinner fa-spin text-[16px]"></i>';
+document.getElementById('btnSubmitAuth').disabled = true;
+try {
+const response = await fetch(gasUrl, {
+method: 'POST',
+body: JSON.stringify({ action: mode, phone: phone })
+});
+const result = await response.json();
+if (result.status === 'success') {
+localStorage.setItem('userPhone', result.phone);
+currentUserPhone = result.phone;
+document.getElementById('authScreen').classList.add('hidden');
+switchTab('mempelai');
+let savedKode = localStorage.getItem('savedKode_' + currentUserPhone);
+let initialKode = savedKode ? savedKode : document.querySelector('input[name="kodeUndangan"]:checked').value;
+if(savedKode) kunciKode(savedKode);
+loadDataByKode(initialKode);
+} else {
+tampilkanModal(result.message, false);
+}
+} catch (error) {
+tampilkanModal('Gagal menghubungi server.', false);
+} finally {
+document.getElementById('btnSubmitAuth').disabled = false;
+switchAuth(mode);
+}
+}
+
+function logout() {
+localStorage.removeItem('userPhone');
+currentUserPhone = null;
+document.getElementById('mainForm').reset();
+document.getElementById('authPhone').value = '';
+document.getElementById('authScreen').classList.remove('hidden');
+document.querySelectorAll('input[name="kodeUndangan"]').forEach(radio => {
+radio.disabled = false;
+radio.parentElement.classList.remove('opacity-50', 'pointer-events-none');
+radio.nextElementSibling.classList.add('text-[#64748b]', 'border-gray-200');
+radio.nextElementSibling.classList.remove('bg-gray-100', 'text-gray-400', 'border-gray-100');
+});
+document.querySelector('input[name="kodeUndangan"][value="U1"]').checked = true;
+}
+
+function extractDriveId(url) {
+if (!url) return null;
+const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+return match ? match[1] : null;
+}
+
+function getBankLogo(bank) {
+const logos = {
+"Bank Rakyat Indonesia (BRI)": "https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg",
+"Bank Negara Indonesia (BNI)": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg",
+"Bank Tabungan Negara (BTN)": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Bank_BTN_logo.svg",
+"Bank Central Asia (BCA)": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg",
+"Bank CIMB Niaga": "https://upload.wikimedia.org/wikipedia/commons/3/38/CIMB_Niaga_logo.svg",
+"DANA": "https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg",
+"OVO": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg",
+"GoPay": "https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg",
+"ShopeePay": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
+};
+return logos[bank] || "";
+}
+
+function updateTimeline(tabId) {
+const tabs = ['mempelai', 'media', 'acara', 'kado'];
+const idx = tabs.indexOf(tabId);
+if(idx === -1) return;
+const percentages = [0, 33.33, 66.66, 100];
+document.getElementById('tl-progress-bar').style.width = percentages[idx] + '%';
+tabs.forEach((tab, index) => {
+const dot = document.getElementById('dot-' + tab);
+if(index <= idx) {
+dot.classList.add('active');
+dot.classList.remove('inactive');
+} else {
+dot.classList.remove('active');
+dot.classList.add('inactive');
+}
+});
+}
+
+function nextTabMobile() {
+if (currentTabIndex < mobileTabsOrder.length - 1) {
+switchTab(mobileTabsOrder[currentTabIndex + 1]);
+}
+}
+
+function switchTab(tabId) {
+document.querySelectorAll('.tab-content').forEach(el => {
+el.classList.add('hidden');
+el.classList.remove('flex');
+});
+document.getElementById('mainForm').classList.remove('hidden');
+document.getElementById('mainForm').classList.add('flex');
+document.getElementById('progress-wrapper').classList.remove('hidden');
+document.getElementById('progress-wrapper').classList.add('md:block');
+updateTimeline(tabId);
+const activeSection = document.getElementById('section-' + tabId);
+activeSection.classList.remove('hidden');
+activeSection.classList.add('flex');
+document.querySelectorAll('.tab-btn').forEach(el => {
+el.classList.remove('active-tab');
+if (el.classList.contains('text-red-500')) return;
+el.classList.add('text-[#64748b]');
+});
+document.querySelectorAll('.btn-tab-' + tabId).forEach(activeBtn => {
+activeBtn.classList.add('active-tab');
+activeBtn.classList.remove('text-[#64748b]');
+});
+document.getElementById('mainForm').scrollTop = 0;
+
+currentTabIndex = mobileTabsOrder.indexOf(tabId);
+const btnNextMobile = document.getElementById('btnNextMobile');
+const btnSubmitMobile = document.getElementById('btnSubmitMobile');
+
+if (btnNextMobile && btnSubmitMobile) {
+if (currentTabIndex === mobileTabsOrder.length - 1) {
+btnNextMobile.classList.add('hidden');
+btnSubmitMobile.classList.remove('hidden');
+btnSubmitMobile.classList.add('flex');
+} else {
+btnSubmitMobile.classList.add('hidden');
+btnSubmitMobile.classList.remove('flex');
+btnNextMobile.classList.remove('hidden');
+}
+}
+}
+
+function tampilkanKonfirmasi() {
+document.getElementById('modal-konfirmasi').classList.remove('hidden');
+document.getElementById('modal-konfirmasi').classList.add('flex');
+}
+
+function batalSimpan() {
+document.getElementById('modal-konfirmasi').classList.add('hidden');
+document.getElementById('modal-konfirmasi').classList.remove('flex');
+}
+
+function tampilkanModal(pesan, isProses = false) {
+document.getElementById('modal-info-desc').textContent = pesan;
+const btnTutup = document.getElementById('btnTutupModal');
+if(isProses) {
+btnTutup.classList.add('hidden');
+} else {
+btnTutup.classList.remove('hidden');
+}
+document.getElementById('modal-info').classList.remove('hidden');
+document.getElementById('modal-info').classList.add('flex');
+}
+
+function tutupModal() {
+document.getElementById('modal-info').classList.add('hidden');
+document.getElementById('modal-info').classList.remove('flex');
+}
+
+function tambahKado() {
+const bank = document.getElementById('bankSelect').value;
+const nomor = document.getElementById('nomorRekening').value;
+const nama = document.getElementById('atasNama').value;
+const logo = getBankLogo(bank);
+if(nomor.trim() === '' || nama.trim() === '') {
+tampilkanModal('Mohon isi Nomor Rekening dan Atas Nama!', false);
+return;
+}
+dataKado.push({ bank, nomor, nama, logo });
+document.getElementById('nomorRekening').value = '';
+document.getElementById('atasNama').value = '';
+renderTabelKado();
+}
+
+function hapusKado(index) {
+dataKado.splice(index, 1);
+renderTabelKado();
+}
+
+function renderTabelKado() {
+const tbody = document.getElementById('tabelKado');
+tbody.innerHTML = '';
+if(dataKado.length === 0) {
+tbody.innerHTML = '<div class="text-center text-[#64748b] font-medium text-[11px] md:text-[13px] py-4">Belum ada data kado</div>';
+return;
+}
+dataKado.forEach((item, index) => {
+const logoUrl = item.logo || getBankLogo(item.bank);
+const logoHtml = logoUrl ? `<img src="${logoUrl}" alt="${item.bank}" class="h-4 md:h-5 object-contain mr-2">` : '';
+const div = document.createElement('div');
+div.className = 'bg-gray-50 border border-gray-200 px-5 py-4 md:px-6 md:py-5 flex justify-between items-center rounded-2xl md:rounded-3xl relative';
+div.innerHTML = '<div class="flex flex-col"><div class="flex items-center mb-1">' + logoHtml + '<span class="font-heading font-bold text-[12px] md:text-[15px] text-[#1e293b]">' + item.bank + '</span></div><span class="text-[10px] md:text-[12px] text-[#079790] font-extrabold font-mono">' + item.nomor + '</span><span class="text-[9px] md:text-[11px] text-[#64748b] uppercase font-bold mt-1">' + item.nama + '</span></div><button type="button" onclick="hapusKado(' + index + ')" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-red-500 bg-white hover:bg-red-50 border border-red-100 rounded-full shrink-0 transition-colors"><i class="fas fa-trash-alt text-[10px] md:text-[12px]"></i></button>';
+tbody.appendChild(div);
+});
+}
+
+function fileToBase64(file) {
+return new Promise((resolve, reject) => {
+if (!file) {
+resolve(null);
+return;
+}
+const reader = new FileReader();
+reader.readAsDataURL(file);
+reader.onload = () => resolve({
+name: file.name,
+mimeType: file.type,
+base64: reader.result
+});
+reader.onerror = error => reject(error);
+});
+}
+
+function resetFormFields() {
+document.getElementById('namaLengkapWanita').value = '';
+document.getElementById('namaPanggilanWanita').value = '';
+document.getElementById('ayahWanita').value = '';
+document.getElementById('ibuWanita').value = '';
+document.getElementById('putriKe').value = '';
+document.getElementById('namaLengkapPria').value = '';
+document.getElementById('namaPanggilanPria').value = '';
+document.getElementById('ayahPria').value = '';
+document.getElementById('ibuPria').value = '';
+document.getElementById('putraKe').value = '';
+document.getElementById('previewFotoWanita').classList.add('hidden');
+document.getElementById('imgWanita').src = '';
+document.getElementById('previewFotoPria').classList.add('hidden');
+document.getElementById('imgPria').src = '';
+document.getElementById('previewFotoAlbum').classList.add('hidden');
+document.getElementById('previewFotoAlbum').innerHTML = '';
+document.getElementById('tanggalAkad').value = '';
+document.getElementById('jamAkad').value = '';
+document.getElementById('alamatAkad').value = '';
+document.getElementById('mapAkad').value = '';
+document.getElementById('tanggalResepsi').value = '';
+document.getElementById('jamResepsi').value = '';
+document.getElementById('alamatResepsi').value = '';
+document.getElementById('mapResepsi').value = '';
+document.getElementById('noHpWa').value = '';
+dataKado = [];
+renderTabelKado();
+}
+
+async function loadDataByKode(kode) {
+if (!currentUserPhone) return;
+tampilkanModal('Memuat data ' + kode + '...', true);
+try {
+const response = await fetch(gasUrl + '?action=getData&kode=' + kode + '&phone=' + currentUserPhone);
+const result = await response.json();
+tutupModal();
+if (result.status === 'success') {
+editRowId = result.row;
+document.getElementById('namaLengkapWanita').value = result.wanita.namaLengkap || '';
+document.getElementById('namaPanggilanWanita').value = result.wanita.namaPanggilan || '';
+document.getElementById('ayahWanita').value = result.wanita.ayah || '';
+document.getElementById('ibuWanita').value = result.wanita.ibu || '';
+document.getElementById('putriKe').value = result.wanita.putriKe || '';
+document.getElementById('namaLengkapPria').value = result.pria.namaLengkap || '';
+document.getElementById('namaPanggilanPria').value = result.pria.namaPanggilan || '';
+document.getElementById('ayahPria').value = result.pria.ayah || '';
+document.getElementById('ibuPria').value = result.pria.ibu || '';
+document.getElementById('putraKe').value = result.pria.putraKe || '';
+
+const prevW = document.getElementById('previewFotoWanita');
+const imgW = document.getElementById('imgWanita');
+if(result.media.fotoWanita) {
+const idW = extractDriveId(result.media.fotoWanita);
+if(idW) {
+imgW.src = 'https://drive.google.com/thumbnail?id=' + idW + '&sz=w1000';
+prevW.classList.remove('hidden');
+}
+} else { prevW.classList.add('hidden'); imgW.src = ''; }
+
+const prevP = document.getElementById('previewFotoPria');
+const imgP = document.getElementById('imgPria');
+if(result.media.fotoPria) {
+const idP = extractDriveId(result.media.fotoPria);
+if(idP) {
+imgP.src = 'https://drive.google.com/thumbnail?id=' + idP + '&sz=w1000';
+prevP.classList.remove('hidden');
+}
+} else { prevP.classList.add('hidden'); imgP.src = ''; }
+
+const prevA = document.getElementById('previewFotoAlbum');
+prevA.innerHTML = '';
+if(result.media.album && result.media.album.trim() !== '') {
+const albums = result.media.album.split('\n');
+albums.forEach(alUrl => {
+const idA = extractDriveId(alUrl);
+if(idA) {
+const aImg = document.createElement('img');
+aImg.src = 'https://drive.google.com/thumbnail?id=' + idA + '&sz=w1000';
+aImg.className = 'w-20 md:w-24 h-20 md:h-24 object-cover rounded-xl';
+prevA.appendChild(aImg);
+}
+});
+if(prevA.innerHTML !== '') prevA.classList.remove('hidden');
+else prevA.classList.add('hidden');
+} else { prevA.classList.add('hidden'); }
+
+const tglAkad = document.getElementById('tanggalAkad');
+if(result.akad.tanggal) { tglAkad.value = String(result.akad.tanggal).substring(0, 10); } else { tglAkad.value = ''; }
+
+const jmAkad = document.getElementById('jamAkad');
+if(result.akad.jam) {
+let jmStr = String(result.akad.jam);
+let match = jmStr.match(/\d{2}:\d{2}/);
+jmAkad.value = match ? match[0] : jmStr.substring(0, 5);
+} else { jmAkad.value = ''; }
+
+document.getElementById('alamatAkad').value = result.akad.alamat || '';
+document.getElementById('mapAkad').value = result.akad.map || '';
+
+const tglResepsi = document.getElementById('tanggalResepsi');
+if(result.resepsi.tanggal) { tglResepsi.value = String(result.resepsi.tanggal).substring(0, 10); } else { tglResepsi.value = ''; }
+
+const jmResepsi = document.getElementById('jamResepsi');
+if(result.resepsi.jam) {
+let jmStr = String(result.resepsi.jam);
+let match = jmStr.match(/\d{2}:\d{2}/);
+jmResepsi.value = match ? match[0] : jmStr.substring(0, 5);
+} else { jmResepsi.value = ''; }
+
+document.getElementById('alamatResepsi').value = result.resepsi.alamat || '';
+document.getElementById('mapResepsi').value = result.resepsi.map || '';
+
+let waData = result.kontak && result.kontak.wa ? String(result.kontak.wa) : '';
+if(waData.startsWith('62')) {
+waData = '0' + waData.substring(2);
+}
+document.getElementById('noHpWa').value = waData;
+
+dataKado = result.kado || [];
+renderTabelKado();
+} else if (result.status === 'empty') {
+editRowId = null;
+resetFormFields();
+} else {
+tampilkanModal(result.message || 'Gagal memuat data.', false);
+}
+} catch(e) {
+tutupModal();
+tampilkanModal('Terjadi kesalahan jaringan saat memuat data.', false);
+}
+}
+
+async function lanjutSimpan() {
+batalSimpan();
+const pendingNomor = document.getElementById('nomorRekening').value;
+const pendingNama = document.getElementById('atasNama').value;
+if(pendingNomor.trim() !== '' && pendingNama.trim() !== '') {
+const bankVal = document.getElementById('bankSelect').value;
+dataKado.push({
+bank: bankVal,
+nomor: pendingNomor,
+nama: pendingNama,
+logo: getBankLogo(bankVal)
+});
+document.getElementById('nomorRekening').value = '';
+document.getElementById('atasNama').value = '';
+renderTabelKado();
+}
+
+const btnSubmitDesktop = document.getElementById('btnSubmitDesktop');
+const btnSubmitMobile = document.getElementById('btnSubmitMobile');
+const originalTextDesktop = btnSubmitDesktop ? btnSubmitDesktop.innerHTML : '';
+const originalTextMobile = btnSubmitMobile ? btnSubmitMobile.innerHTML : '';
+
+if(btnSubmitDesktop) {
+btnSubmitDesktop.innerHTML = '<i class="fas fa-spinner fa-spin w-5 text-center md:text-[18px]"></i> <span>MENGIRIM</span>';
+btnSubmitDesktop.classList.add('btn-processing');
+btnSubmitDesktop.disabled = true;
+}
+
+if(btnSubmitMobile) {
+btnSubmitMobile.innerHTML = '<i class="fas fa-spinner fa-spin text-[16px]"></i> Proses';
+btnSubmitMobile.classList.add('btn-processing');
+btnSubmitMobile.disabled = true;
+}
+
+try {
+const fotoWanitaFile = document.getElementById('linkFotoWanita').files[0];
+const fotoPriaFile = document.getElementById('linkFotoPria').files[0];
+const albumFiles = document.getElementById('linkFolderAlbum').files;
+const fotoWanita = await fileToBase64(fotoWanitaFile);
+const fotoPria = await fileToBase64(fotoPriaFile);
+const album = [];
+
+for (let i = 0; i < albumFiles.length; i++) {
+const base64File = await fileToBase64(albumFiles[i]);
+if (base64File) album.push(base64File);
+}
+
+let waFinal = document.getElementById('noHpWa').value;
+if(waFinal.startsWith('0')) {
+waFinal = '62' + waFinal.substring(1);
+}
+
+const activeKode = document.querySelector('input[name="kodeUndangan"]:checked').value;
+
+const configData = {
+action: 'save',
+phone: currentUserPhone,
+kodeUndangan: activeKode,
+row: editRowId,
+media: {
+fotoWanita: fotoWanita,
+fotoPria: fotoPria,
+album: album
+},
+wanita: {
+namaLengkap: document.getElementById('namaLengkapWanita').value,
+namaPanggilan: document.getElementById('namaPanggilanWanita').value,
+ayah: document.getElementById('ayahWanita').value,
+ibu: document.getElementById('ibuWanita').value,
+putriKe: document.getElementById('putriKe').value
+},
+pria: {
+namaLengkap: document.getElementById('namaLengkapPria').value,
+namaPanggilan: document.getElementById('namaPanggilanPria').value,
+ayah: document.getElementById('ayahPria').value,
+ibu: document.getElementById('ibuPria').value,
+putraKe: document.getElementById('putraKe').value
+},
+akad: {
+tanggal: document.getElementById('tanggalAkad').value,
+jam: document.getElementById('jamAkad').value,
+alamat: document.getElementById('alamatAkad').value,
+map: document.getElementById('mapAkad').value
+},
+resepsi: {
+tanggal: document.getElementById('tanggalResepsi').value,
+jam: document.getElementById('jamResepsi').value,
+alamat: document.getElementById('alamatResepsi').value,
+map: document.getElementById('mapResepsi').value
+},
+kado: dataKado,
+kontak: {
+wa: waFinal
+}
+};
+
+const response = await fetch(gasUrl, {
+method: 'POST',
+body: JSON.stringify(configData)
+});
+
+const result = await response.json();
+if(result.status === 'success') {
+localStorage.setItem('savedKode_' + currentUserPhone, activeKode);
+kunciKode(activeKode);
+tampilkanModal('Data berhasil disimpan ke Spreadsheet dan Drive!', false);
+loadDataByKode(activeKode);
+} else {
+tampilkanModal('Terjadi kesalahan: ' + result.message, false);
+}
+} catch (error) {
+tampilkanModal('Gagal mengirim data. Pastikan URL Web App benar dan bisa diakses.', false);
+} finally {
+if(btnSubmitDesktop) {
+btnSubmitDesktop.innerHTML = originalTextDesktop;
+btnSubmitDesktop.classList.remove('btn-processing');
+btnSubmitDesktop.disabled = false;
+}
+if(btnSubmitMobile) {
+btnSubmitMobile.innerHTML = originalTextMobile;
+btnSubmitMobile.classList.remove('btn-processing');
+btnSubmitMobile.disabled = false;
+}
+}
+}
+</script>
+</body>
+</html>
