@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Data Mempelai | Tewe Tech</title>
+<title>Form Mempelai | Tewe Tech</title>
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tewetech/favicon/refs/heads/main/tewe.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Quicksand:wght@500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -254,41 +254,112 @@ font-size: 9px;
 <div class="absolute top-0 left-0 w-full h-2 bg-[#079790]"></div>
 <div class="text-center mb-8 mt-2">
 <h2 class="text-[20px] md:text-[24px] font-heading font-black tracking-tight text-[#1e293b]">FORMULIR<span class="text-[#079790]"> MEMPELAI</span></h2>
-<p class="text-[#64748b] text-[12px] font-bold mt-1">Formulir untuk Mempelai</p>
+<p class="text-[#64748b] text-[12px] font-bold mt-1">semoga sakinah mawaddah warahmah</p>
 </div>
 <div class="flex bg-gray-100 rounded-full p-1 mb-6">
 <button type="button" onclick="switchAuth('login')" id="btnAuthLogin" class="flex-1 py-2.5 text-[12px] font-bold rounded-full bg-white text-[#079790] shadow-sm transition-all">Masuk</button>
 <button type="button" onclick="switchAuth('register')" id="btnAuthRegister" class="flex-1 py-2.5 text-[12px] font-bold rounded-full text-[#64748b] transition-all">Daftar</button>
+<button type="button" onclick="switchAuth('admin')" id="btnAuthAdmin" class="flex-1 py-2.5 text-[12px] font-bold rounded-full text-[#64748b] transition-all">Admin</button>
 </div>
 <form id="authForm" onsubmit="event.preventDefault(); prosesAuth();" class="flex flex-col gap-5">
 <input type="hidden" id="authMode" value="login">
-<div class="float-container">
+<div class="float-container" id="phoneContainer">
 <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none md:hidden z-10">
 <i class="fas fa-phone-alt text-[#079790]"></i>
 </div>
 <input type="text" inputmode="numeric" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '')" id="authPhone" required class="float-input !pl-11 md:!pl-4" placeholder=" ">
 <label class="float-label !left-11 md:!left-4">Nomor HP (WhatsApp)</label>
 </div>
+<div class="float-container hidden" id="passwordContainer">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none md:hidden z-10">
+<i class="fas fa-lock text-[#079790]"></i>
+</div>
+<input type="password" id="authPassword" class="float-input !pl-11 md:!pl-4" placeholder=" ">
+<label class="float-label !left-11 md:!left-4">Password Admin</label>
+</div>
 <button type="submit" id="btnSubmitAuth" class="w-full mt-2 py-4 rounded-full bg-[#079790] hover:bg-[#06827c] text-white shadow-md font-bold text-[13px] uppercase tracking-wider transition-all">Masuk</button>
 </form>
 </div>
 </div>
 
-<header class="w-full h-[65px] shrink-0 flex flex-col md:hidden items-center justify-center z-40 relative glass-panel shadow-sm border-b border-gray-200">
+<div id="adminDashboard" class="hidden fixed inset-0 z-[150] bg-[#f8fafc] flex-col w-full h-full pb-[75px] md:pb-0">
+<header class="w-full h-[65px] glass-panel shadow-sm border-b border-gray-200 flex items-center justify-between px-6 shrink-0">
+<h1 class="text-[14px] md:text-[18px] font-heading font-black text-[#1e293b]">ADMIN<span class="text-[#079790]"> PANEL</span></h1>
+<button onclick="logout()" class="hidden md:block text-red-500 font-bold text-[12px] px-4 py-2 hover:bg-red-50 rounded-full transition-colors"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+</header>
+<div class="p-4 md:p-8 flex-1 overflow-y-auto w-full max-w-5xl mx-auto custom-scrollbar">
+
+<div id="adminSectionPassword" class="admin-section hidden md:block bg-white rounded-[30px] p-6 shadow-sm border border-gray-100 mb-6">
+<h2 class="font-heading font-bold text-[16px] mb-4 text-[#1e293b]">Ganti Password Admin</h2>
+<div class="flex flex-col md:flex-row gap-4">
+<div class="float-container flex-1">
+<input type="password" id="newAdminPassword" class="float-input" placeholder=" ">
+<label class="float-label">Password Baru</label>
+</div>
+<button onclick="gantiPasswordAdmin()" id="btnGantiPass" class="bg-[#079790] hover:bg-[#06827c] text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md">Simpan</button>
+</div>
+</div>
+
+<div id="adminSectionData" class="admin-section md:block bg-white rounded-[30px] p-6 shadow-sm border border-gray-100">
+<h2 class="font-heading font-bold text-[16px] mb-4 text-[#1e293b] hidden md:block">Daftar User & Undangan</h2>
+<div class="mb-5 float-container">
+<input type="text" id="searchAdmin" onkeyup="filterAdminData()" class="float-input" placeholder=" ">
+<label class="float-label">Cari Nama Pengantin / No HP</label>
+</div>
+
+<div class="hidden md:block overflow-x-auto custom-scrollbar">
+<table class="w-full text-left text-[12px] md:text-[13px] border-collapse min-w-[750px]">
+<thead class="bg-gray-50 text-[#64748b]">
+<tr>
+<th class="p-4 rounded-tl-xl font-bold text-center">Baris</th>
+<th class="p-4 font-bold">No HP</th>
+<th class="p-4 font-bold">Mempelai Wanita</th>
+<th class="p-4 font-bold">Mempelai Pria</th>
+<th class="p-4 font-bold">Tgl Update</th>
+<th class="p-4 rounded-tr-xl font-bold text-center">Aksi</th>
+</tr>
+</thead>
+<tbody id="adminUserTableBody" class="divide-y divide-gray-100">
+</tbody>
+</table>
+</div>
+
+<div class="flex md:hidden flex-col gap-4" id="adminUserMobileBody">
+</div>
+</div>
+
+</div>
+</div>
+
+<nav id="adminMobileNav" class="hidden w-full h-[75px] shrink-0 md:hidden justify-around items-center px-1 z-[160] fixed bottom-0 glass-panel rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.03)] border-t border-gray-200">
+<button type="button" onclick="switchAdminTab('data')" class="admin-tab-btn btn-admin-data flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide active-tab transition-all gap-1 h-12 text-[#64748b]">
+<i class="fas fa-users text-[14px] mb-0.5"></i> Data User
+</button>
+<button type="button" onclick="switchAdminTab('password')" class="admin-tab-btn btn-admin-password flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide text-[#64748b] transition-all gap-1 h-12 hover:bg-gray-50/50">
+<i class="fas fa-key text-[14px] mb-0.5"></i> Password
+</button>
+<button type="button" onclick="logout()" class="admin-tab-btn flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-extrabold tracking-wide text-red-500 transition-all gap-1 h-12 hover:bg-red-50">
+<i class="fas fa-sign-out-alt text-[14px] mb-0.5"></i> Keluar
+</button>
+</nav>
+
+<header class="w-full h-[65px] shrink-0 flex flex-col md:hidden items-center justify-center z-40 relative glass-panel shadow-sm border-b border-gray-200" id="userHeaderMobile">
 <h1 class="text-[12px] font-heading font-black tracking-tight text-[#1e293b] mb-1.5">FORMULIR <span class="text-[#079790]">MEMPELAI</span></h1>
-<div class="flex gap-2">
+<div class="flex gap-2 items-center">
 <p class="bg-gray-100 text-[#079790] text-[8px] font-bold px-3 py-1 rounded-full border border-gray-200">Formulir Untuk Mempelai</p>
 <p id="rowIndicatorMobile" class="hidden bg-teal-50 text-[#079790] text-[8px] font-bold px-3 py-1 rounded-full border border-teal-200"></p>
+<button type="button" onclick="kembaliKeAdmin()" id="btnBackAdminMobile" class="hidden bg-yellow-50 text-yellow-600 text-[8px] font-bold px-3 py-1 rounded-full border border-yellow-200"><i class="fas fa-arrow-left"></i> Admin</button>
 </div>
 </header>
 
-<aside class="hidden md:flex w-52 lg:w-64 h-full shrink-0 flex-col z-40 relative bg-white shadow-[2px_0_10px_rgba(0,0,0,0.03)] border-r border-gray-100">
+<aside class="hidden md:flex w-52 lg:w-64 h-full shrink-0 flex-col z-40 relative bg-white shadow-[2px_0_10px_rgba(0,0,0,0.03)] border-r border-gray-100" id="userAsideDesktop">
 <div class="flex flex-col items-center justify-center mt-10 mb-8">
 <h1 class="text-[14px] md:text-[20px] font-heading font-black tracking-tight text-[#1e293b]">FORMULIR<span class="text-[#079790]"> MEMPELAI</span></h1>
-<div class="flex gap-2 mt-3">
+<div class="flex gap-2 mt-3 flex-wrap justify-center">
 <p class="bg-gray-100 text-[#079790] text-[9px] md:text-[10px] font-bold px-4 py-1.5 rounded-full border border-gray-200">Formulir Untuk Mempelai</p>
 <p id="rowIndicatorDesktop" class="hidden bg-teal-50 text-[#079790] text-[9px] md:text-[10px] font-bold px-4 py-1.5 rounded-full border border-teal-200"></p>
 </div>
+<button type="button" onclick="kembaliKeAdmin()" id="btnBackAdminDesktop" class="hidden mt-3 bg-yellow-50 text-yellow-600 text-[10px] font-bold px-4 py-1.5 rounded-full border border-yellow-200 transition-colors hover:bg-yellow-100"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Admin</button>
 </div>
 <nav class="flex flex-col gap-3 px-5 w-full mt-2 flex-1 overflow-y-auto">
 <button type="button" onclick="switchTab('mempelai')" class="tab-btn btn-tab-mempelai flex items-center py-3.5 px-5 rounded-2xl text-[11px] md:text-[14px] font-bold tracking-wide active-tab transition-all gap-4 w-full text-[#64748b]">
@@ -473,15 +544,21 @@ font-size: 9px;
 <div class="md:col-span-1 float-container">
 <select id="bankSelect" class="float-input">
 <option value="Bank Rakyat Indonesia (BRI)">Bank Rakyat Indonesia (BRI)</option>
+<option value="Bank Mandiri">Bank Mandiri</option>
 <option value="Bank Negara Indonesia (BNI)">Bank Negara Indonesia (BNI)</option>
+<option value="Bank Syariah Indonesia (BSI)">Bank Syariah Indonesia (BSI)</option>
 <option value="Bank Tabungan Negara (BTN)">Bank Tabungan Negara (BTN)</option>
 <option value="Bank Central Asia (BCA)">Bank Central Asia (BCA)</option>
 <option value="Bank CIMB Niaga">Bank CIMB Niaga</option>
+<option value="Bank Permata">Bank Permata</option>
+<option value="Bank Danamon">Bank Danamon</option>
+<option value="Bank Mega">Bank Mega</option>
 <option value="SeaBank">SeaBank</option>
 <option value="DANA">DANA</option>
 <option value="OVO">OVO</option>
 <option value="GoPay">GoPay</option>
 <option value="ShopeePay">ShopeePay</option>
+<option value="LinkAja">LinkAja</option>
 </select>
 <label class="float-label">Bank / E-Wallet</label>
 </div>
@@ -524,7 +601,7 @@ Tambah Kado
 
 </main>
 
-<nav class="w-full h-[75px] shrink-0 flex md:hidden justify-around items-center px-1 z-[100] relative glass-panel rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.03)] border-t border-gray-200">
+<nav id="userMobileNav" class="w-full h-[75px] shrink-0 flex md:hidden justify-around items-center px-1 z-[100] relative glass-panel rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.03)] border-t border-gray-200">
 <button type="button" onclick="switchTab('mempelai')" class="tab-btn btn-tab-mempelai flex-1 flex flex-col items-center justify-center py-2 mx-0.5 rounded-2xl text-[9px] font-bold tracking-wide active-tab transition-all gap-1 h-12 text-[#64748b]">
 <i class="fas fa-user-friends text-[14px] mb-0.5"></i> Mempelai
 </button>
@@ -567,62 +644,134 @@ Tambah Kado
 </div>
 </div>
 
+<div id="modal-hapus" class="fixed inset-0 z-[260] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
+<div class="bg-white p-6 md:p-8 rounded-[30px] w-full max-w-[280px] md:max-w-[340px] relative flex flex-col items-center text-center shadow-2xl border border-gray-100">
+<div class="w-14 h-14 md:w-16 md:h-16 bg-red-50 rounded-full flex items-center justify-center mb-5 md:mb-6 border border-red-100">
+<i class="fas fa-exclamation-triangle text-red-500 text-[20px] md:text-[24px]"></i>
+</div>
+<h3 class="text-[#1e293b] font-heading font-bold text-[14px] md:text-[16px] mb-2">Konfirmasi Hapus</h3>
+<p id="modal-hapus-desc" class="text-[#64748b] text-[11px] md:text-[13px] font-medium mb-6 md:mb-8"></p>
+<div class="flex gap-4 w-full">
+<button type="button" onclick="batalHapusUser()" class="flex-1 py-3 md:py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Batal</button>
+<button type="button" onclick="lanjutHapusUser()" class="flex-1 py-3 md:py-4 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-md font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Hapus</button>
+</div>
+</div>
+</div>
+
 <script>
-const gasUrl = "https://script.google.com/macros/s/AKfycbxImqudXsk2Yge6K5bXavVzyEuBcJ6_UbojjPGLWsyd5Bu0Gpk4CVJLSFvlknNC6PuW/exec";
+const gasUrl = "https://script.google.com/macros/s/AKfycbwoHua2FfrPAKJ_85jsodWxUftwbLHXW95XQ0ryCDkmMOYOkdbDjrt4uVVS2wby3kwz/exec";
 let dataKado = [];
 let editRowId = null;
 let currentUserPhone = localStorage.getItem('userPhone');
+let isAdmin = localStorage.getItem('adminMode') === 'true';
+let adminDataList = [];
+let userPhoneToDelete = null;
 
 const mobileTabsOrder = ['mempelai', 'media', 'acara', 'kado'];
 let currentTabIndex = 0;
 
-if (currentUserPhone) {
+if (isAdmin) {
 document.getElementById('authScreen').classList.add('hidden');
+document.getElementById('userMobileNav').classList.add('hidden');
+loadAdminDashboard();
+} else if (currentUserPhone) {
+document.getElementById('authScreen').classList.add('hidden');
+document.getElementById('adminMobileNav').classList.add('hidden');
 switchTab('mempelai');
 loadDataByKode();
+} else {
+document.getElementById('userMobileNav').classList.add('hidden');
+document.getElementById('adminMobileNav').classList.add('hidden');
 }
 
 function switchAuth(mode) {
 document.getElementById('authMode').value = mode;
 const btnLogin = document.getElementById('btnAuthLogin');
 const btnRegister = document.getElementById('btnAuthRegister');
+const btnAdmin = document.getElementById('btnAuthAdmin');
 const btnSubmit = document.getElementById('btnSubmitAuth');
+const phoneCont = document.getElementById('phoneContainer');
+const passCont = document.getElementById('passwordContainer');
+const authPhone = document.getElementById('authPhone');
+const authPassword = document.getElementById('authPassword');
+
+btnLogin.classList.replace('bg-white', 'text-[#64748b]');
+btnLogin.classList.replace('text-[#079790]', 'bg-transparent');
+btnLogin.classList.remove('shadow-sm');
+btnRegister.classList.replace('bg-white', 'text-[#64748b]');
+btnRegister.classList.replace('text-[#079790]', 'bg-transparent');
+btnRegister.classList.remove('shadow-sm');
+btnAdmin.classList.replace('bg-white', 'text-[#64748b]');
+btnAdmin.classList.replace('text-[#079790]', 'bg-transparent');
+btnAdmin.classList.remove('shadow-sm');
+
 if (mode === 'login') {
 btnLogin.classList.add('bg-white', 'text-[#079790]', 'shadow-sm');
-btnLogin.classList.remove('text-[#64748b]');
-btnRegister.classList.remove('bg-white', 'text-[#079790]', 'shadow-sm');
-btnRegister.classList.add('text-[#64748b]');
+btnLogin.classList.remove('text-[#64748b]', 'bg-transparent');
 btnSubmit.innerText = 'Masuk';
-} else {
+phoneCont.classList.remove('hidden');
+passCont.classList.add('hidden');
+authPhone.required = true;
+authPassword.required = false;
+} else if (mode === 'register') {
 btnRegister.classList.add('bg-white', 'text-[#079790]', 'shadow-sm');
-btnRegister.classList.remove('text-[#64748b]');
-btnLogin.classList.remove('bg-white', 'text-[#079790]', 'shadow-sm');
-btnLogin.classList.add('text-[#64748b]');
+btnRegister.classList.remove('text-[#64748b]', 'bg-transparent');
 btnSubmit.innerText = 'Daftar';
+phoneCont.classList.remove('hidden');
+passCont.classList.add('hidden');
+authPhone.required = true;
+authPassword.required = false;
+} else if (mode === 'admin') {
+btnAdmin.classList.add('bg-white', 'text-[#079790]', 'shadow-sm');
+btnAdmin.classList.remove('text-[#64748b]', 'bg-transparent');
+btnSubmit.innerText = 'Masuk Admin';
+phoneCont.classList.add('hidden');
+passCont.classList.remove('hidden');
+authPhone.required = false;
+authPassword.required = true;
 }
 }
 
 async function prosesAuth() {
 const phone = document.getElementById('authPhone').value;
+const pass = document.getElementById('authPassword').value;
 const mode = document.getElementById('authMode').value;
-if (!phone || phone.trim() === '') {
+if ((mode === 'login' || mode === 'register') && (!phone || phone.trim() === '')) {
 tampilkanModal('Nomor HP wajib diisi!', false);
+return;
+}
+if (mode === 'admin' && (!pass || pass.trim() === '')) {
+tampilkanModal('Password wajib diisi!', false);
 return;
 }
 document.getElementById('btnSubmitAuth').innerHTML = '<i class="fas fa-spinner fa-spin text-[16px]"></i>';
 document.getElementById('btnSubmitAuth').disabled = true;
 try {
+let payload = { action: mode === 'admin' ? 'admin_login' : mode };
+if (mode === 'admin') {
+payload.password = pass;
+} else {
+payload.phone = phone;
+}
 const response = await fetch(gasUrl, {
 method: 'POST',
-body: JSON.stringify({ action: mode, phone: phone })
+body: JSON.stringify(payload)
 });
 const result = await response.json();
 if (result.status === 'success') {
+document.getElementById('authScreen').classList.add('hidden');
+if (mode === 'admin') {
+localStorage.setItem('adminMode', 'true');
+isAdmin = true;
+loadAdminDashboard();
+} else {
 localStorage.setItem('userPhone', result.phone);
 currentUserPhone = result.phone;
-document.getElementById('authScreen').classList.add('hidden');
 switchTab('mempelai');
 loadDataByKode();
+document.getElementById('userMobileNav').classList.remove('hidden');
+document.getElementById('userMobileNav').classList.add('flex');
+}
 } else {
 tampilkanModal(result.message, false);
 }
@@ -636,11 +785,212 @@ switchAuth(mode);
 
 function logout() {
 localStorage.removeItem('userPhone');
+localStorage.removeItem('adminMode');
 currentUserPhone = null;
+isAdmin = false;
 document.getElementById('mainForm').reset();
 document.getElementById('authPhone').value = '';
+document.getElementById('authPassword').value = '';
 resetFormFields();
+document.getElementById('adminDashboard').classList.add('hidden');
+document.getElementById('mainForm').classList.add('hidden');
+document.getElementById('progress-wrapper').classList.add('hidden');
+document.getElementById('userMobileNav').classList.add('hidden');
+document.getElementById('adminMobileNav').classList.add('hidden');
 document.getElementById('authScreen').classList.remove('hidden');
+switchAuth('login');
+}
+
+function switchAdminTab(tab) {
+document.querySelectorAll('.admin-section').forEach(el => {
+el.classList.remove('block');
+el.classList.add('hidden');
+el.classList.add('md:block');
+});
+document.querySelectorAll('.admin-tab-btn').forEach(el => {
+if(!el.classList.contains('text-red-500')) {
+el.classList.remove('active-tab');
+el.classList.add('text-[#64748b]');
+}
+});
+if (tab === 'data') {
+document.getElementById('adminSectionData').classList.remove('hidden');
+document.getElementById('adminSectionData').classList.add('block');
+document.querySelector('.btn-admin-data').classList.add('active-tab');
+document.querySelector('.btn-admin-data').classList.remove('text-[#64748b]');
+} else if (tab === 'password') {
+document.getElementById('adminSectionPassword').classList.remove('hidden');
+document.getElementById('adminSectionPassword').classList.add('block');
+document.querySelector('.btn-admin-password').classList.add('active-tab');
+document.querySelector('.btn-admin-password').classList.remove('text-[#64748b]');
+}
+}
+
+async function loadAdminDashboard() {
+document.getElementById('adminDashboard').classList.remove('hidden');
+document.getElementById('adminDashboard').classList.add('flex');
+document.getElementById('adminMobileNav').classList.remove('hidden');
+document.getElementById('adminMobileNav').classList.add('flex');
+document.getElementById('userMobileNav').classList.add('hidden');
+const tbodyDesk = document.getElementById('adminUserTableBody');
+const tbodyMob = document.getElementById('adminUserMobileBody');
+tbodyDesk.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-[#64748b]"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat data...</td></tr>';
+tbodyMob.innerHTML = '<div class="text-center p-6 text-[#64748b]"><i class="fas fa-spinner fa-spin mr-2"></i>Memuat data...</div>';
+try {
+const response = await fetch(gasUrl + '?action=get_all_users');
+const result = await response.json();
+if (result.status === 'success') {
+adminDataList = result.data;
+renderAdminData(adminDataList);
+} else {
+tbodyDesk.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-[#64748b]">Belum ada data user</td></tr>';
+tbodyMob.innerHTML = '<div class="text-center p-6 text-[#64748b]">Belum ada data user</div>';
+}
+} catch (e) {
+tbodyDesk.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-red-500">Gagal memuat data</td></tr>';
+tbodyMob.innerHTML = '<div class="text-center p-6 text-red-500">Gagal memuat data</div>';
+}
+switchAdminTab('data');
+}
+
+function filterAdminData() {
+const keyword = document.getElementById('searchAdmin').value.toLowerCase();
+const filtered = adminDataList.filter(user => 
+user.phone.toLowerCase().includes(keyword) || 
+user.wanita.toLowerCase().includes(keyword) || 
+user.pria.toLowerCase().includes(keyword)
+);
+renderAdminData(filtered);
+}
+
+function renderAdminData(data) {
+const tbodyDesk = document.getElementById('adminUserTableBody');
+const tbodyMob = document.getElementById('adminUserMobileBody');
+tbodyDesk.innerHTML = '';
+tbodyMob.innerHTML = '';
+if (data.length === 0) {
+tbodyDesk.innerHTML = '<tr><td colspan="6" class="text-center p-6 text-[#64748b]">Data tidak ditemukan</td></tr>';
+tbodyMob.innerHTML = '<div class="text-center p-6 text-[#64748b]">Data tidak ditemukan</div>';
+return;
+}
+data.forEach((user) => {
+const tr = document.createElement('tr');
+tr.className = 'hover:bg-gray-50 transition-colors';
+tr.innerHTML = `
+<td class="p-4 border-b border-gray-100 font-bold text-center">${user.row !== "-" ? user.row : "-"}</td>
+<td class="p-4 border-b border-gray-100 font-mono text-[11px] md:text-[12px] text-[#079790] font-bold">${user.phone}</td>
+<td class="p-4 border-b border-gray-100 font-bold">${user.wanita}</td>
+<td class="p-4 border-b border-gray-100 font-bold">${user.pria}</td>
+<td class="p-4 border-b border-gray-100 text-[11px] text-[#64748b]">${user.timestamp}</td>
+<td class="p-4 border-b border-gray-100 text-center flex justify-center gap-2">
+<button onclick="editUserAsAdmin('${user.phone}')" class="w-8 h-8 rounded-full bg-blue-50 text-blue-500 hover:bg-blue-100 transition-colors flex items-center justify-center"><i class="fas fa-edit"></i></button>
+<button onclick="hapusUserAsAdmin('${user.phone}')" class="w-8 h-8 rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition-colors flex items-center justify-center"><i class="fas fa-trash-alt"></i></button>
+</td>
+`;
+tbodyDesk.appendChild(tr);
+
+const card = document.createElement('div');
+card.className = 'bg-white shadow-sm border border-gray-100 rounded-2xl p-4 flex flex-col gap-2 relative';
+card.innerHTML = `
+<div class="absolute top-4 right-4 text-[10px] bg-gray-50 border border-gray-200 px-2 py-1 rounded-md font-bold text-[#64748b]">Baris: ${user.row !== "-" ? user.row : "-"}</div>
+<div class="font-mono text-[12px] text-[#079790] font-bold"><i class="fas fa-phone-alt mr-1 text-[#079790]"></i> ${user.phone}</div>
+<div class="text-[13px] font-bold text-[#1e293b] mt-1"><i class="fas fa-female text-pink-500 mr-1"></i> ${user.wanita}</div>
+<div class="text-[13px] font-bold text-[#1e293b]"><i class="fas fa-male text-blue-500 mr-1"></i> ${user.pria}</div>
+<div class="text-[10px] text-[#64748b] mt-1"><i class="fas fa-clock mr-1"></i> ${user.timestamp}</div>
+<div class="flex gap-2 mt-3 pt-3 border-t border-gray-100">
+<button onclick="editUserAsAdmin('${user.phone}')" class="flex-1 py-2 rounded-xl bg-blue-50 text-blue-500 hover:bg-blue-100 transition-colors flex items-center justify-center font-bold text-[11px] gap-1"><i class="fas fa-edit"></i> Edit</button>
+<button onclick="hapusUserAsAdmin('${user.phone}')" class="flex-1 py-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-colors flex items-center justify-center font-bold text-[11px] gap-1"><i class="fas fa-trash-alt"></i> Hapus</button>
+</div>
+`;
+tbodyMob.appendChild(card);
+});
+}
+
+function hapusUserAsAdmin(phone) {
+userPhoneToDelete = phone;
+document.getElementById('modal-hapus-desc').textContent = `Hapus seluruh data untuk user ${phone}?`;
+document.getElementById('modal-hapus').classList.remove('hidden');
+document.getElementById('modal-hapus').classList.add('flex');
+}
+
+async function lanjutHapusUser() {
+document.getElementById('modal-hapus').classList.add('hidden');
+document.getElementById('modal-hapus').classList.remove('flex');
+let phone = userPhoneToDelete;
+if (!phone) return;
+tampilkanModal('Menghapus data...', true);
+try {
+const response = await fetch(gasUrl + '?action=admin_delete_user&delPhone=' + phone);
+const result = await response.json();
+tutupModal();
+if (result.status === 'success') {
+loadAdminDashboard();
+} else {
+tampilkanModal('Gagal menghapus data.', false);
+}
+} catch (e) {
+tutupModal();
+tampilkanModal('Kesalahan jaringan.', false);
+}
+}
+
+function batalHapusUser() {
+userPhoneToDelete = null;
+document.getElementById('modal-hapus').classList.add('hidden');
+document.getElementById('modal-hapus').classList.remove('flex');
+}
+
+async function gantiPasswordAdmin() {
+const newPass = document.getElementById('newAdminPassword').value;
+if (!newPass || newPass.trim() === '') return;
+const btn = document.getElementById('btnGantiPass');
+btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+btn.disabled = true;
+try {
+const response = await fetch(gasUrl, {
+method: 'POST',
+body: JSON.stringify({ action: 'update_admin', password: newPass })
+});
+const result = await response.json();
+if (result.status === 'success') {
+tampilkanModal('Password berhasil diubah!', false);
+document.getElementById('newAdminPassword').value = '';
+} else {
+tampilkanModal('Gagal mengubah password.', false);
+}
+} catch (e) {
+tampilkanModal('Terjadi kesalahan.', false);
+} finally {
+btn.innerHTML = 'Simpan';
+btn.disabled = false;
+}
+}
+
+function editUserAsAdmin(phone) {
+currentUserPhone = phone;
+document.getElementById('adminDashboard').classList.add('hidden');
+document.getElementById('adminDashboard').classList.remove('flex');
+document.getElementById('adminMobileNav').classList.add('hidden');
+document.getElementById('adminMobileNav').classList.remove('flex');
+document.getElementById('mainForm').reset();
+resetFormFields();
+switchTab('mempelai');
+loadDataByKode();
+document.getElementById('btnBackAdminMobile').classList.remove('hidden');
+document.getElementById('btnBackAdminDesktop').classList.remove('hidden');
+document.getElementById('userMobileNav').classList.remove('hidden');
+document.getElementById('userMobileNav').classList.add('flex');
+}
+
+function kembaliKeAdmin() {
+currentUserPhone = null;
+document.getElementById('btnBackAdminMobile').classList.add('hidden');
+document.getElementById('btnBackAdminDesktop').classList.add('hidden');
+document.getElementById('mainForm').classList.add('hidden');
+document.getElementById('progress-wrapper').classList.add('hidden');
+document.getElementById('userMobileNav').classList.add('hidden');
+document.getElementById('userMobileNav').classList.remove('flex');
+loadAdminDashboard();
 }
 
 function extractDriveId(url) {
@@ -652,15 +1002,21 @@ return match ? match[1] : null;
 function getBankLogo(bank) {
 const logos = {
 "Bank Rakyat Indonesia (BRI)": "https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg",
+"Bank Mandiri": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg",
 "Bank Negara Indonesia (BNI)": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg",
-"Bank Tabungan Negara (BTN)": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Bank_BTN_logo.svg",
+"Bank Syariah Indonesia (BSI)": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Bank_Syariah_Indonesia.svg",
+"Bank Tabungan Negara (BTN)": "https://upload.wikimedia.org/wikipedia/commons/c/ca/BTN_2024.svg",
 "Bank Central Asia (BCA)": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg",
 "Bank CIMB Niaga": "https://upload.wikimedia.org/wikipedia/commons/3/38/CIMB_Niaga_logo.svg",
+"Bank Permata": "https://upload.wikimedia.org/wikipedia/id/4/48/PermataBank_logo.svg",
+"Bank Danamon": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Danamon.svg",
+"Bank Mega": "https://upload.wikimedia.org/wikipedia/commons/a/af/Bank_Mega_2013.svg",
 "SeaBank": "https://upload.wikimedia.org/wikipedia/commons/a/ac/SeaBank.svg",
 "DANA": "https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg",
 "OVO": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg",
 "GoPay": "https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg",
-"ShopeePay": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg"
+"ShopeePay": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg",
+"LinkAja": "https://upload.wikimedia.org/wikipedia/commons/8/85/LinkAja.svg"
 };
 return logos[bank] || "";
 }
@@ -858,11 +1214,11 @@ editRowId = result.row;
 const rowIndMobile = document.getElementById('rowIndicatorMobile');
 const rowIndDesktop = document.getElementById('rowIndicatorDesktop');
 if(rowIndMobile) {
-rowIndMobile.textContent = 'Line ' + result.row;
+rowIndMobile.textContent = 'Baris ' + result.row;
 rowIndMobile.classList.remove('hidden');
 }
 if(rowIndDesktop) {
-rowIndDesktop.textContent = 'Line ' + result.row;
+rowIndDesktop.textContent = 'Baris ' + result.row;
 rowIndDesktop.classList.remove('hidden');
 }
 
