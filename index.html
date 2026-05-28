@@ -254,6 +254,9 @@ font-size: 9px;
 <div class="text-center mb-8 mt-2">
 <h2 class="text-[20px] md:text-[24px] font-heading font-black tracking-tight text-[#334155]">FORMULIR<span class="text-[#2a9d8f]"> MEMPELAI</span></h2>
 <p class="text-[#71717a] text-[12px] font-bold mt-1">semoga sakinah mawaddah warahmah</p>
+<button type="button" onclick="bukaModalBuatLink()" class="mt-4 px-4 py-2.5 bg-[#2a9d8f] hover:bg-[#21867a] text-white shadow-md rounded-full text-[12px] font-bold transition-all w-full flex items-center justify-center gap-2">
+<i class="fas fa-link"></i> Buat Link Tamu Undangan
+</button>
 </div>
 <div class="flex bg-gray-100 rounded-full p-1 mb-6">
 <button type="button" onclick="switchAuth('login')" id="btnAuthLogin" class="flex-1 py-2.5 text-[12px] font-bold rounded-full bg-white text-[#2a9d8f] shadow-sm transition-all">Masuk</button>
@@ -345,7 +348,7 @@ font-size: 9px;
 <header class="w-full h-[65px] shrink-0 flex flex-col md:hidden items-center justify-center z-40 relative glass-panel shadow-sm border-b border-gray-200" id="userHeaderMobile">
 <h1 class="text-[12px] font-heading font-black tracking-tight text-[#334155] mb-1.5">FORMULIR <span class="text-[#2a9d8f]">MEMPELAI</span></h1>
 <div class="flex gap-2 items-center">
-<p class="bg-gray-100 text-[#2a9d8f] text-[8px] font-bold px-3 py-1 rounded-full border border-gray-200">Version ID 3.0.4</p>
+<p class="bg-gray-100 text-[#2a9d8f] text-[8px] font-bold px-3 py-1 rounded-full border border-gray-200">Version ID 3.0.9</p>
 <button type="button" onclick="bukaModalGantiHp()" class="bg-blue-50 text-blue-400 text-[8px] font-bold px-3 py-1 rounded-full border border-blue-200"><i class="fas fa-phone-alt"></i> Ganti HP</button>
 <p id="rowIndicatorMobile" class="hidden bg-teal-50 text-[#2a9d8f] text-[8px] font-bold px-3 py-1 rounded-full border border-teal-200"></p>
 <button type="button" onclick="kembaliKeAdmin()" id="btnBackAdminMobile" class="hidden bg-yellow-50 text-yellow-600 text-[8px] font-bold px-3 py-1 rounded-full border border-yellow-200"><i class="fas fa-arrow-left"></i> Admin</button>
@@ -356,7 +359,7 @@ font-size: 9px;
 <div class="flex flex-col items-center justify-center mt-6 mb-4">
 <h1 class="text-[14px] md:text-[20px] font-heading font-black tracking-tight text-[#334155]">FORMULIR<span class="text-[#2a9d8f]"> MEMPELAI</span></h1>
 <div class="flex gap-2 mt-3 flex-wrap justify-center">
-<p class="bg-gray-100 text-[#2a9d8f] text-[9px] md:text-[10px] font-bold px-4 py-1.5 rounded-full border border-gray-200">Version ID 3.0.4</p>
+<p class="bg-gray-100 text-[#2a9d8f] text-[9px] md:text-[10px] font-bold px-4 py-1.5 rounded-full border border-gray-200">Version ID 3.0.9</p>
 <p id="rowIndicatorDesktop" class="hidden bg-teal-50 text-[#2a9d8f] text-[9px] md:text-[10px] font-bold px-4 py-1.5 rounded-full border border-teal-200"></p>
 </div>
 <button type="button" onclick="kembaliKeAdmin()" id="btnBackAdminDesktop" class="hidden mt-3 bg-yellow-50 text-yellow-600 text-[10px] font-bold px-4 py-1.5 rounded-full border border-yellow-200 transition-colors hover:bg-yellow-100"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Admin</button>
@@ -721,7 +724,7 @@ Tambah Kado
 </div>
 </div>
 
-<div id="modal-info" class="fixed inset-0 z-[250] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
+<div id="modal-info" class="fixed inset-0 z-[400] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
 <div class="bg-white p-6 md:p-8 rounded-[30px] w-full max-w-[280px] md:max-w-[340px] relative flex flex-col items-center text-center shadow-2xl border border-gray-100">
 <div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 rounded-full flex items-center justify-center mb-5 md:mb-6 border border-blue-100">
 <i class="fas fa-info-circle text-blue-400 text-[20px] md:text-[24px]"></i>
@@ -743,6 +746,29 @@ Tambah Kado
 <button type="button" onclick="batalHapusUser()" class="flex-1 py-3 md:py-4 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Batal</button>
 <button type="button" onclick="lanjutHapusUser()" class="flex-1 py-3 md:py-4 rounded-full bg-red-400 hover:bg-red-500 text-white shadow-md font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors">Hapus</button>
 </div>
+</div>
+</div>
+
+<div id="modal-buat-link" class="fixed inset-0 z-[250] hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm transition-opacity p-4">
+<div class="bg-white p-6 md:p-8 rounded-[30px] w-full max-w-[280px] md:max-w-[340px] relative flex flex-col items-center text-center shadow-2xl border border-gray-100">
+<button type="button" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600" onclick="tutupModalBuatLink()">
+<i class="fas fa-times text-lg"></i>
+</button>
+<div class="w-14 h-14 md:w-16 md:h-16 bg-blue-50 rounded-full flex items-center justify-center mb-5 md:mb-6 border border-blue-100">
+<i class="fas fa-link text-blue-400 text-[20px] md:text-[24px]"></i>
+</div>
+<h3 class="text-[#334155] font-heading font-bold text-[14px] md:text-[16px] mb-4">Buat Link Tamu Undangan</h3>
+<div class="float-container w-full mb-4">
+<input type="text" id="inputBaseUrl" class="float-input" placeholder=" " oninput="saveBaseUrl()">
+<label class="float-label">Link Undangan Dari Penjual</label>
+</div>
+<div class="float-container w-full mb-6">
+<input type="text" id="inputGuestName" class="float-input" placeholder=" ">
+<label class="float-label">Nama Tamu</label>
+</div>
+<button type="button" id="btnActionLink" onclick="prosesBuatLink()" class="w-full py-3 md:py-4 rounded-full bg-[#2a9d8f] hover:bg-[#21867a] text-white shadow-md font-bold text-[11px] md:text-[13px] uppercase tracking-wider transition-colors flex justify-center items-center gap-2">
+<i class="fas fa-copy text-[14px]"></i> <span>Buat & Salin Link</span>
+</button>
 </div>
 </div>
 
@@ -1793,6 +1819,69 @@ btnSubmitGuestbook.classList.remove('btn-processing');
 btnSubmitGuestbook.disabled = false;
 }
 }
+}
+
+function bukaModalBuatLink() {
+const savedUrl = localStorage.getItem('baseUrlUndangan');
+if (savedUrl) {
+document.getElementById('inputBaseUrl').value = savedUrl;
+}
+document.getElementById('inputGuestName').value = '';
+resetBtnLink();
+document.getElementById('modal-buat-link').classList.remove('hidden');
+document.getElementById('modal-buat-link').classList.add('flex');
+}
+
+function tutupModalBuatLink() {
+document.getElementById('modal-buat-link').classList.add('hidden');
+document.getElementById('modal-buat-link').classList.remove('flex');
+}
+
+function saveBaseUrl() {
+const baseUrl = document.getElementById('inputBaseUrl').value;
+localStorage.setItem('baseUrlUndangan', baseUrl);
+}
+
+function prosesBuatLink() {
+const btn = document.getElementById('btnActionLink');
+if (btn.getAttribute('data-state') === 'reset') {
+document.getElementById('inputGuestName').value = '';
+resetBtnLink();
+return;
+}
+const baseUrl = document.getElementById('inputBaseUrl').value.trim();
+const guestName = document.getElementById('inputGuestName').value.trim();
+if (!baseUrl || !guestName) {
+tampilkanModal('Link dan Nama Tamu harus diisi !', false);
+return;
+}
+saveBaseUrl();
+
+let cleanBaseUrl = baseUrl.trim();
+if (!/^https?:\/\//i.test(cleanBaseUrl)) {
+cleanBaseUrl = 'https://' + cleanBaseUrl;
+}
+cleanBaseUrl = cleanBaseUrl.replace(/\/+$/, '');
+
+const finalUrl = cleanBaseUrl + '/?to=' + encodeURIComponent(guestName);
+
+navigator.clipboard.writeText(finalUrl).then(() => {
+btn.innerHTML = '<i class="fas fa-redo text-[14px]"></i> <span>Reset</span>';
+btn.setAttribute('data-state', 'reset');
+btn.classList.replace('bg-[#2a9d8f]', 'bg-yellow-500');
+btn.classList.replace('hover:bg-[#21867a]', 'hover:bg-yellow-600');
+tampilkanModal('Berhasil !', false);
+}).catch(err => {
+tampilkanModal('Gagal menyalin link.', false);
+});
+}
+
+function resetBtnLink() {
+const btn = document.getElementById('btnActionLink');
+btn.innerHTML = '<i class="fas fa-copy text-[14px]"></i> <span>Buat & Salin Link</span>';
+btn.setAttribute('data-state', 'create');
+btn.classList.replace('bg-yellow-500', 'bg-[#2a9d8f]');
+btn.classList.replace('hover:bg-yellow-600', 'hover:bg-[#21867a]');
 }
 </script>
 </body>
